@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ALL Project — Figriaone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/projects.css" />
+</head>
+
+<body>
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+
+  <!-- SCANLINES -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header__inner">
+      <a href="index.html" class="logo">
+        <span class="logo__bracket">[</span>
+        <span class="logo__text">Figriaone</span>
+        <span class="logo__bracket">]</span>
+        <span class="logo__cursor">_</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html#about" class="nav__link">about</a>
+        <a href="index.html#services" class="nav__link">services</a>
+        <a href="index.html#portfolio" class="nav__link">portfolio</a>
+        <a href="index.html#contact" class="nav__link">contact</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#about" class="mobile-menu__link">01. about</a>
+    <a href="index.html#services" class="mobile-menu__link">02. services</a>
+    <a href="index.html#portfolio" class="mobile-menu__link">03. portfolio</a>
+    <a href="index.html#contact" class="mobile-menu__link">04. contact</a>
+  </div>
+
+  <main>
+
+    <!-- ░░ PAGE HERO ░░ -->
+    <section class="page-hero">
+      <div class="page-hero__bg-grid" aria-hidden="true"></div>
+      <div class="container">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" aria-label="breadcrumb">
+          <a href="index.html" class="breadcrumb__link">home</a>
+          <span class="breadcrumb__sep">/</span>
+          <a href="index.html#portfolio" class="breadcrumb__link">portfolio</a>
+          <span class="breadcrumb__sep">/</span>
+          <span class="breadcrumb__current">Project</span>
+        </nav>
+
+        <div class="page-hero__content">
+          <div class="section-label">
+            <span class="section-label__num">03</span>
+            <span class="section-label__line"></span>
+            <span>portfolio / Project</span>
+          </div>
+          <h1 class="page-hero__title">
+            ALL <span class="accent">Project</span>
+          </h1>
+          <p class="page-hero__sub">
+            Koleksi karya UI/UX, Frontend, Game Developing & Video Editing.
+          </p>
+
+          <div class="page-hero__meta">
+            <div class="meta-chip">
+              <span class="meta-chip__num" id="projectCount">10</span>
+              <span class="meta-chip__label">Projects</span>
+            </div>
+            <div class="meta-chip">
+              <span class="meta-chip__num">2022–2025</span>
+              <span class="meta-chip__label">Timeline</span>
+            </div>
+            <div class="meta-chip">
+              <span class="meta-chip__num">Video Editing</span>
+              <span class="meta-chip__label">Using AP, AE & Davinci</span>
+            </div>
+            <div class="meta-chip">
+              <span class="meta-chip__num">UI/UX Desgin</span>
+              <span class="meta-chip__label">Using Figma</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ FILTER BAR ░░ -->
+    <div class="filter-bar">
+      <div class="container">
+        <div class="filter-bar__inner">
+          <div class="filter-bar__left">
+            <span class="filter-label">Filter:</span>
+            <div class="filter-chips" id="filterChips">
+              <!-- Filter chips will be generated dynamically by JS -->
+              <button class="filter-chip active" data-filter="all">All</button>
+            </div>
+          </div>
+          <div class="filter-bar__right">
+            <span class="filter-count" id="filterCount">Showing <strong>10</strong> projects</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ░░ PROJECT GRID ░░ -->
+    <section class="projects-section">
+      <div class="container">
+        <div class="projects-grid" id="projectsGrid">
+          <div class="loading-state" id="projectsLoading"
+            style="grid-column: 1 / -1; text-align: center; padding: 4rem 0;">
+            <p style="color: var(--clr-gray); font-family: var(--font-mono);">[ fetching_projects... ]</p>
+          </div>
+          <!-- Project cards will be injected here dynamically -->
+        </div><!-- /grid -->
+
+        <div id="loadMoreContainer" style="display:none; text-align:center; margin-top:3rem;">
+          <button class="btn btn--ghost" id="loadMoreBtn">Selanjutnya ↓</button>
+        </div>
+
+        <!-- Empty state -->
+        <div class="empty-state" id="emptyState" style="display:none">
+          <div class="empty-state__icon">⌀</div>
+          <p class="empty-state__text">Tidak ada project di kategori ini.</p>
+          <button class="btn btn--ghost" id="resetFilter">Tampilkan semua</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ░░ BACK CTA ░░ -->
+    <section class="back-cta">
+      <div class="container">
+        <div class="back-cta__inner fade-in" style="justify-content: center;">
+          <div class="back-cta__links">
+            <a href="index.html#contact" class="btn btn--primary">Diskusi Project →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER MINI -->
+  <footer class="footer-mini">
+    <div class="container">
+      <div class="footer-mini__inner">
+        <a href="index.html" class="logo">
+          <span class="logo__bracket">[</span>
+          <span class="logo__text">Figriaone</span>
+          <span class="logo__bracket">]</span>
+          <span class="logo__cursor">_</span>
+        </a>
+        <p class="footer-mini__copy">© 2025 Figriaone — Hand-crafted in Yogyakarta</p>
+        <p class="footer-mini__ascii">[ keep_building(); ]</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/projects.js"></script>
+</body>
+
+</html>

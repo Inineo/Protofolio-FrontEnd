@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Figriaone — Digital Craftsman</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- ░░ CURSOR ░░ -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+
+  <!-- ░░ SCANLINE OVERLAY ░░ -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- ░░ HEADER / NAV ░░ -->
+  <header class="header" id="header">
+    <div class="header__inner">
+      <a href="#" class="logo">
+        <span class="logo__bracket">[</span>
+        <span class="logo__text">Figriaone</span>
+        <span class="logo__bracket">]</span>
+        <span class="logo__cursor">_</span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#about" class="nav__link" data-text="about">about</a>
+        <a href="#services" class="nav__link" data-text="services">services</a>
+        <a href="#portfolio" class="nav__link" data-text="portfolio">portfolio</a>
+        <a href="#contact" class="nav__link" data-text="contact">contact</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ░░ MOBILE MENU ░░ -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about" class="mobile-menu__link">01. about</a>
+    <a href="#services" class="mobile-menu__link">02. services</a>
+    <a href="#portfolio" class="mobile-menu__link">03. portfolio</a>
+    <a href="#contact" class="mobile-menu__link">04. contact</a>
+  </div>
+
+  <main>
+
+    <!-- ░░░░░░░░░░ SPLASH / LANDING ░░░░░░░░░░ -->
+    <section class="splash" id="splash">
+      <div class="splash__noise" aria-hidden="true"></div>
+
+      <!-- Teks besar dekoratif di belakang foto -->
+      <div class="splash__bg-text" aria-hidden="true">PORTFOLIO</div>
+
+      <!-- Foto pribadi (ganti path dengan foto PNG transparan Anda) -->
+      <div class="splash__photo-wrap">
+        <div class="splash__photo-glow" aria-hidden="true"></div>
+        <img class="splash__photo" src="images/avatar 1.png" alt="Figriaone — Developer & Designer" />
+      </div>
+
+      <!-- Role tags tersebar di sekitar foto -->
+      <div class="splash__roles">
+        <span class="splash__role splash__role--tl">UI/UX<br />DESIGNER</span>
+        <span class="splash__role splash__role--tr">FRONTEND<br />DEVELOPER</span>
+        <span class="splash__role splash__role--bl">VIDEO<br />EDITOR</span>
+        <span class="splash__role splash__role--br">SYSTEM<br />ANALYST</span>
+      </div>
+
+      <!-- Sub-info di bagian bawah -->
+      <div class="splash__bottom">
+        <div class="splash__bottom-left">
+          <span class="splash__dot"></span>
+          <span class="splash__status">Available for projects</span>
+        </div>
+        <!-- <span class="splash__name">[Figriaone]</span> -->
+        <span class="splash__year">© 2025</span>
+      </div>
+
+      <!-- Scroll indicator -->
+      <a href="#hero" class="splash__scroll" aria-label="Scroll down">
+        <div class="splash__scroll-line"></div>
+        <span>SCROLL</span>
+      </a>
+    </section>
+
+    <!-- ░░░░░░░░░░ HERO ░░░░░░░░░░ -->
+    <section class="hero" id="hero">
+      <div class="hero__bg-grid" aria-hidden="true"></div>
+      <div class="hero__noise" aria-hidden="true"></div>
+
+      <div class="hero__content">
+        <div class="hero__tag">
+          <span class="tag__dot"></span>
+          <span>Available for projects · 2025</span>
+        </div>
+
+        <h1 class="hero__heading">
+          <span class="hero__heading-line reveal-line">Crafting</span>
+          <span class="hero__heading-line reveal-line">
+            <em>Digital</em>
+            <span class="hero__pixel-word">Experiences</span>
+          </span>
+          <span class="hero__heading-line reveal-line">Pixel by Pixel</span>
+        </h1>
+
+        <p class="hero__sub">
+          Frontend Engineer & UI/UX Designer dengan pendekatan sistem dan sentuhan visual storytelling — menciptakan
+          pengalaman digital yang
+          <strong>fungsional</strong>,
+          <strong>estetik</strong>, dan terasa <strong>hidup</strong>.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#portfolio" class="btn btn--primary">
+            <span class="btn__text">Lihat Karya</span>
+            <span class="btn__icon">→</span>
+          </a>
+          <a href="#contact" class="btn btn--ghost">Let's Talk</a>
+        </div>
+
+        <div class="hero__stats">
+          <div class="stat">
+            <span class="stat__num" data-target="13">0</span>
+            <span class="stat__label">Projects Shipped</span>
+          </div>
+          <div class="stat__divider"></div>
+          <div class="stat">
+            <span class="stat__num" data-target="1">0</span>
+            <span class="stat__label">Years Coding</span>
+          </div>
+          <div class="stat__divider"></div>
+          <div class="stat">
+            <span class="stat__num" data-target="55">0</span>
+            <span class="stat__label">Coffee Cups ☕</span>
+          </div>
+          <div class="stat">
+            <span class="stat__num" data-target="5">0</span>
+            <span class="stat__label"> Years Video Editor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <div class="terminal">
+          <div class="terminal__bar">
+            <span class="t-dot t-dot--red"></span>
+            <span class="t-dot t-dot--yellow"></span>
+            <span class="t-dot t-dot--green"></span>
+            <span class="terminal__title">Figriaone@portfolio:~</span>
+          </div>
+          <div class="terminal__body" id="terminalBody"></div>
+        </div>
+      </div>
+
+      <div class="hero__scroll-hint">
+        <div class="scroll-line"></div>
+        <span>scroll</span>
+      </div>
+    </section>
+
+    <!-- ░░░░░░░░░░ ABOUT ░░░░░░░░░░ -->
+    <section class="about section" id="about">
+      <div class="container">
+        <div class="about__grid">
+          <div class="about__left fade-in">
+            <div class="section-label">
+              <span class="section-label__num">01</span>
+              <span class="section-label__line"></span>
+              <span>about.exe</span>
+            </div>
+            <h2 class="section-heading">
+              Bukan sekadar<br />
+              <span class="accent">coder</span> biasa.
+            </h2>
+            <p class="about__body">
+              Nama saya <strong>Figriaone</strong> — seorang IT enthusiast yang tertarik pada persimpangan antara
+              <em>teknologi</em>, <em>logika</em> dan <em>seni visual</em>. Saya percaya bahwa sebuah produk digital
+              yang baik bukan
+              hanya berfungsi, tapi yang terasa <strong>intuitif</strong> dan <strong>nyaman</strong> digunakan.
+            </p>
+            <p class="about__body">
+              Dengan latar belakang di frontend engineering dan system design, saya cenderung bekerja
+              secara <em>reflektif</em> dan <em>strategis</em> — memahami gambaran besar terlebih dahulu,
+              lalu menerjemahkannya ke dalam struktur yang <strong>rapi</strong> dan <strong>detail visual</strong> yang
+              presisi.
+            </p>
+            <div class="about__skills">
+              <div class="skill-chip">HTML / CSS</div>
+              <div class="skill-chip">JavaScript</div>
+              <div class="skill-chip">Figma</div>
+              <div class="skill-chip">Git</div>
+              <div class="skill-chip">UI/UX</div>
+              <div class="skill-chip">System Analyst</div>
+              <div class="skill-chip">Godot</div>
+              <div class="skill-chip">Unity</div>
+              <div class="skill-chip">Adobe Premiere</div>
+              <div class="skill-chip">After Effects</div>
+              <div class="skill-chip">Davinci Resolve</div>
+            </div>
+          </div>
+
+          <div class="about__right fade-in">
+            <div class="about__card-wrap">
+              <div class="about__card">
+                <div class="about__avatar">
+                  <img src="images/avatar2.jpeg" alt="Profile Photo" class="pas-foto" />
+                </div>
+                <div class="about__card-info">
+                  <p class="about__name">Figriaone</p>
+                  <p class="about__role">Creative Developer</p>
+                  <p class="about__location">📍 Yogyakarta, Indonesia</p>
+                </div>
+                <div class="about__card-badges">
+                  <span class="badge badge--blue">Junior Frontend & <br>UI/UX Desginer<br></span>
+                  <span class="badge badge--yellow"> Freelance <br>Video Editor<br></span>
+                </div>
+              </div>
+              <div class="about__decorbox" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░░░░░░░░░ SERVICES ░░░░░░░░░░ -->
+    <section class="services section" id="services">
+      <div class="container">
+        <div class="section-header fade-in">
+          <div class="section-label">
+            <span class="section-label__num">02</span>
+            <span class="section-label__line"></span>
+            <span>services.exe</span>
+          </div>
+          <h2 class="section-heading">
+            Apa yang saya<br /><span class="accent">tawarkan</span> untukmu
+          </h2>
+          <p class="section-sub">Dari ide ke produk — saya handle semuanya dengan presisi dan estetika tinggi.</p>
+        </div>
+
+        <div class="services__grid">
+          <div class="service-card fade-in" data-delay="0">
+            <div class="service-card__icon">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="6" y="8" width="28" height="20" rx="2" stroke="currentColor" stroke-width="2" />
+                <path d="M12 18L16 22L12 26" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M18 26h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <path d="M30 4v4m-2 -2h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </div>
+            <h3 class="service-card__title">Creative Development</h3>
+            <p class="service-card__desc">
+              Menggabungkan logika dan visual untuk menciptakan interaksi yang hidup — dari animasi UI
+              hingga pengalaman yang terasa dinamis.
+            </p>
+            <div class="service-card__tags">
+              <span>Frontend</span><span>UI/UX Desgin</span><span>Animation</span><span>Interaction</span><span>Motion
+                UI</span>
+            </div>
+            <div class="service-card__num">01</div>
+          </div>
+
+          <div class="service-card fade-in" data-delay="100">
+            <div class="service-card__icon">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="4" y="12" width="32" height="16" rx="8" stroke="currentColor" stroke-width="2" />
+                <path d="M12 16v8m-4-4h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <circle cx="26" cy="22" r="1.5" fill="currentColor" />
+                <circle cx="30" cy="18" r="1.5" fill="currentColor" />
+              </svg>
+            </div>
+            <h3 class="service-card__title">Game Development</h3>
+            <p class="service-card__desc">
+              Mengeksplorasi interaksi dan mekanik untuk menciptakan pengalaman yang engaging dan imersif
+            </p>
+            <br>
+            <div class="service-card__tags">
+              <span>Godot / Unity</span><span>Gameplay Logic</span><span>Game Desgin</span><span>Interaction</span>
+            </div>
+            <div class="service-card__num">02</div><br>
+          </div>
+
+          <div class="service-card fade-in" data-delay="200">
+            <div class="service-card__icon">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="6" y="8" width="28" height="24" rx="2" stroke="currentColor" stroke-width="2" />
+                <path d="M10 8v4m6 -4v4m6 -4v4m6 -4v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <path d="M10 28v4m6 -4v4m6 -4v4m6 -4v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <path d="M18 16l6 4-6 4v-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <h3 class="service-card__title">Video Editing / Visual Storytelling</h3>
+            <p class="service-card__desc">
+              Saya membangun narasi visual melalui editing — mengatur ritme, emosi, dan flow
+              agar pesan tersampaikan dengan kuat.
+            </p>
+            <br>
+            <div class="service-card__tags">
+              <span>Premiere</span><span>After
+                Effects</span><span>Davinci</span><span>Storytelling</span><Span>Motion</Span>
+            </div>
+            <div class="service-card__num">03</div><br>
+          </div>
+
+          <div class="service-card fade-in" data-delay="300">
+            <div class="service-card__icon">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="16" y="6" width="8" height="6" rx="1" stroke="currentColor" stroke-width="2" />
+                <rect x="6" y="22" width="8" height="6" rx="1" stroke="currentColor" stroke-width="2" />
+                <rect x="26" y="22" width="8" height="6" rx="1" stroke="currentColor" stroke-width="2" />
+                <path d="M20 12v6m0 0h-10v4m10 -4h10v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+            <h3 class="service-card__title">System Analyst</h3>
+            <p class="service-card__desc">
+              Menganalisis kebutuhan dan merancang alur sistem yang logis untuk memastikan solusi yang tepat dan
+              terstruktur.
+            </p>
+            <br>
+            <div class="service-card__tags">
+              <span>Flowchart</span><span>Use Case</span><span>Activity
+                Diagram</span><span>ERD</span><span>Architecture</span>
+            </div>
+            <div class="service-card__num">04</div><br>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░░░░░░░░░ PORTFOLIO (CAROUSEL) ░░░░░░░░░░ -->
+    <section class="portfolio section" id="portfolio">
+      <div class="container">
+        <div class="section-header fade-in">
+          <div class="section-label">
+            <span class="section-label__num">03</span>
+            <span class="section-label__line"></span>
+            <span>portfolio.exe</span>
+          </div>
+          <h2 class="section-heading">
+            Arsip <span class="accent">karya</span> terpilih
+          </h2>
+          <p class="section-sub">Setiap proyek adalah cerita berbeda — drag untuk menjelajah.</p>
+          <a href="all-projects.html" class="proj-card__link">Lihat Project Lainnya → </a>
+        </div>
+      </div>
+
+      <!-- CAROUSEL (full-bleed) -->
+      <div class="carousel-wrapper fade-in">
+        <div class="carousel" id="carousel">
+          <div class="carousel__track" id="carouselTrack">
+            <!-- Project cards dinamis akan dirender di sini via JS -->
+          </div><!-- /track -->
+        </div><!-- /carousel -->
+
+        <div class="carousel__controls">
+          <div class="carousel__progress">
+            <div class="carousel__progress-bar" id="progressBar"></div>
+          </div>
+          <div class="carousel__arrows">
+            <button class="carousel__btn" id="prevBtn" aria-label="Previous">←</button>
+            <button class="carousel__btn" id="nextBtn" aria-label="Next">→</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░░░░░░░░░ FOOTER / CONTACT ░░░░░░░░░░ -->
+    <footer class="footer section" id="contact">
+      <div class="footer__noise" aria-hidden="true"></div>
+      <div class="container">
+        <div class="footer__grid">
+          <div class="footer__left fade-in">
+            <div class="section-label">
+              <span class="section-label__num">04</span>
+              <span class="section-label__line"></span>
+              <span>contact.exe</span>
+            </div>
+            <h2 class="footer__heading">
+              Punya ide gila?<br />
+              <span class="accent">Let's build it.</span>
+            </h2>
+            <p class="footer__body">
+              Saya selalu terbuka untuk proyek baru, kolaborasi, atau sekadar ngobrol soal teknologi.
+              Kirim pesan — saya biasanya balas dalam 24 jam.
+            </p>
+            <div class="footer__socials">
+              <a href="https://github.com/Inineo" class="social-link">GitHub</a>
+              <a href="https://www.linkedin.com/in/figriaone-hinoor-b9b0aa304/" class="social-link">LinkedIn</a>
+              <a href="#" class="social-link">Dribbble</a>
+              <a href="#" class="social-link">Twitter/X</a>
+            </div>
+          </div>
+
+          <div class="footer__right fade-in">
+            <form class="contact-form" id="contactForm" novalidate>
+              <div class="form-field">
+                <label for="email">Email address</label>
+                <div class="input-wrap">
+                  <input type="email" id="email" name="email" placeholder="kamu@domain.com" autocomplete="off" />
+                  <span class="input-icon">@</span>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="message">Pesan singkat</label>
+                <textarea id="message" name="message" rows="4"
+                  placeholder="Hei Neo, saya mau diskusi tentang..."></textarea>
+              </div>
+              <div class="form-field form-field--checkbox">
+                <input type="checkbox" id="subscribe" name="subscribe" />
+                <label for="subscribe">Daftarkan email saya untuk update proyek &amp; artikel</label>
+              </div>
+              <button type="submit" class="btn btn--primary btn--full">
+                <span class="btn__text">Kirim Pesan</span>
+                <span class="btn__icon">⌑</span>
+              </button>
+              <div class="form-success" id="formSuccess" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer__bottom">
+          <p>© 2025 <strong>Figriaone</strong> — Hand-crafted with ♥ &amp; ☕ in Yogyakarta</p>
+          <p class="footer__ascii">[ keep_building(); ]</p>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>

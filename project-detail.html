@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Detail — Figriaone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/projects.css" />
+  <link rel="stylesheet" href="css/detail.css" />
+</head>
+
+<body>
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header__inner">
+      <a href="index.html" class="logo">
+        <span class="logo__bracket">[</span>
+        <span class="logo__text">inineo</span>
+        <span class="logo__bracket">]</span>
+        <span class="logo__cursor">_</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html#about" class="nav__link">about</a>
+        <a href="index.html#services" class="nav__link">services</a>
+        <a href="all-projects.html" class="nav__link nav__link--active">portfolio</a>
+        <a href="index.html#contact" class="nav__link">contact</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#about" class="mobile-menu__link">01. about</a>
+    <a href="index.html#services" class="mobile-menu__link">02. services</a>
+    <a href="all-projects.html" class="mobile-menu__link">03. portfolio</a>
+    <a href="index.html#contact" class="mobile-menu__link">04. contact</a>
+  </div>
+
+  <main>
+
+    <!-- ░░ PROJECT DETAIL HERO ░░ -->
+    <section class="detail-hero" id="detailHero">
+      <div class="detail-hero__bg" id="detailHeroBg"></div>
+      <div class="container">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb" aria-label="breadcrumb">
+          <a href="index.html" class="breadcrumb__link">home</a>
+          <span class="breadcrumb__sep">/</span>
+          <a href="all-projects.html" class="breadcrumb__link">ui/ux design</a>
+          <span class="breadcrumb__sep">/</span>
+          <span class="breadcrumb__current" id="bc-title">loading...</span>
+        </nav>
+
+        <div class="detail-hero__grid">
+          <div class="detail-hero__left">
+            <div class="section-label">
+              <span class="section-label__num" id="detail-num">01</span>
+              <span class="section-label__line"></span>
+              <span id="detail-category">mobile app</span>
+            </div>
+            <h1 class="detail-hero__title" id="detail-title">Loading...</h1>
+            <p class="detail-hero__sub" id="detail-tagline">—</p>
+
+            <div class="detail-tags" id="detail-tags"></div>
+
+            <div class="detail-hero__actions">
+              <a href="#" class="btn btn--primary" id="detail-live-btn" target="_blank">
+                <span class="btn__text">Live Preview</span>
+                <span class="btn__icon">↗</span>
+              </a>
+              <a href="#" class="btn btn--ghost" id="detail-case-btn">
+                <span class="btn__text">Case Study</span>
+                <span class="btn__icon">→</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="detail-hero__right">
+            <div class="detail-hero__preview" id="detail-preview">
+              <div class="preview-mockup" id="previewMockup"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ PROJECT META BAR ░░ -->
+    <div class="meta-bar">
+      <div class="container">
+        <div class="meta-bar__grid" id="metaBarGrid">
+          <div class="meta-item">
+            <span class="meta-item__label">Client</span>
+            <span class="meta-item__val" id="meta-client">—</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-item__label">Timeline</span>
+            <span class="meta-item__val" id="meta-timeline">—</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-item__label">Role</span>
+            <span class="meta-item__val" id="meta-role">—</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-item__label">Tools</span>
+            <span class="meta-item__val" id="meta-tools">—</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-item__label">Year</span>
+            <span class="meta-item__val" id="meta-year">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ░░ CONTENT SECTIONS ░░ -->
+    <div class="detail-content">
+      <div class="container">
+        <div class="detail-layout">
+
+          <!-- MAIN CONTENT -->
+          <article class="detail-main">
+
+            <!-- Overview -->
+            <section class="content-block fade-in">
+              <div class="content-block__label">Overview</div>
+              <h2 class="content-block__heading" id="content-overview-heading">Project Overview</h2>
+              <div class="content-block__body" id="content-overview"></div>
+            </section>
+
+            <!-- Problem / Challenge -->
+            <section class="content-block fade-in">
+              <div class="content-block__label">Problem Statement</div>
+              <h2 class="content-block__heading">Tantangan yang Dihadapi</h2>
+              <div class="content-block__body" id="content-problem"></div>
+            </section>
+
+            <!-- Full-width image / mockup showcase -->
+            <section class="showcase-block fade-in" id="showcaseBlock">
+              <div class="showcase-grid" id="showcaseGrid"></div>
+            </section>
+
+            <!-- Solution / Process -->
+            <section class="content-block fade-in">
+              <div class="content-block__label">Design Process</div>
+              <h2 class="content-block__heading">Proses & Solusi</h2>
+              <div class="process-steps" id="processSteps"></div>
+            </section>
+
+            <!-- Results / Impact -->
+            <section class="content-block fade-in">
+              <div class="content-block__label">Impact & Results</div>
+              <h2 class="content-block__heading">Dampak & Hasil</h2>
+              <div class="results-grid" id="resultsGrid"></div>
+              <div class="content-block__body" id="content-results"></div>
+            </section>
+
+            <!-- Learnings -->
+            <section class="content-block fade-in">
+              <div class="content-block__label">Reflection</div>
+              <h2 class="content-block__heading">Apa yang Dipelajari</h2>
+              <div class="content-block__body" id="content-learnings"></div>
+            </section>
+
+          </article>
+
+          <!-- SIDEBAR -->
+          <aside class="detail-sidebar">
+            <div class="sidebar-card fade-in">
+              <h4 class="sidebar-card__title">Project Info</h4>
+              <div class="sidebar-info" id="sidebarInfo"></div>
+            </div>
+
+            <div class="sidebar-card fade-in">
+              <h4 class="sidebar-card__title">Tech & Tools</h4>
+              <div class="sidebar-tools" id="sidebarTools"></div>
+            </div>
+
+            <div class="sidebar-card sidebar-card--cta fade-in">
+              <p>Tertarik project serupa?</p>
+              <a href="index.html#contact" class="btn btn--primary btn--full">Let's Talk →</a>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ░░ NEXT / PREV ░░ -->
+    <nav class="project-nav">
+      <div class="container">
+        <div class="project-nav__grid">
+          <a href="#" class="project-nav__item project-nav__item--prev" id="prevProject">
+            <span class="project-nav__dir">← Previous</span>
+            <span class="project-nav__name" id="prevName">—</span>
+          </a>
+          <a href="all-projects.html" class="project-nav__item project-nav__item--all">
+            <span class="project-nav__dir">All Projects</span>
+            <span class="project-nav__grid-icon">⊞</span>
+          </a>
+          <a href="#" class="project-nav__item project-nav__item--next" id="nextProject">
+            <span class="project-nav__dir">Next →</span>
+            <span class="project-nav__name" id="nextName">—</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+  </main>
+
+  <!-- FOOTER MINI -->
+  <footer class="footer-mini">
+    <div class="container">
+      <div class="footer-mini__inner">
+        <a href="index.html" class="logo">
+          <span class="logo__bracket">[</span>
+          <span class="logo__text">Figriaone</span>
+          <span class="logo__bracket">]</span>
+          <span class="logo__cursor">_</span>
+        </a>
+        <p class="footer-mini__copy">© 2025 Figriaone — Hand-crafted in Yogyakarta</p>
+        <p class="footer-mini__ascii">[ keep_building(); ]</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/projects.js"></script>
+  <script src="js/detail.js"></script>
+</body>
+
+</html>
