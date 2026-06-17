@@ -18,6 +18,7 @@
   </noscript>
   <link rel="preload" href="css/style.css" as="style" />
   <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="js/script.js" defer></script>
 </head>
 
@@ -408,15 +409,8 @@
           </div>
 
           <div class="footer__right fade-in">
-            <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/inineo192@gmail.com"
-              method="POST">
+            <form class="contact-form" id="contactForm">
 
-              <!-- ── Formsubmit hidden fields ── -->
-              <!-- Ganti YOUR_EMAIL@gmail.com di atas dengan email asli Anda -->
-              <input type="hidden" name="_subject" value="🗨️ Pesan baru dari Kicaumania Portfolio">
-              <input type="hidden" name="_captcha" value="false">
-              <!-- Honeypot anti-spam -->
-              <input type="text" name="_honey" style="display:none">
 
               <div class="form-field">
                 <label for="contactName">Nama</label>

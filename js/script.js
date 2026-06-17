@@ -572,7 +572,26 @@ function initCarousel() {
   }
 })();
 
-/* ── 10. CONTACT FORM (via contact.php + PHPMailer) ──────────── */
+/* ── 10. CONTACT FORM (via EmailJS — langsung dari browser) ──── */
+/*
+ *  CARA SETUP EmailJS (gratis 200 email/bulan):
+ *  1. Buka https://www.emailjs.com → Sign Up (gratis)
+ *  2. Klik "Email Services" → "Add New Service" → pilih "Gmail"
+ *     → hubungkan akun inineo192@gmail.com → catat SERVICE_ID
+ *  3. Klik "Email Templates" → "Create New Template" →
+ *     Subject : Pesan baru dari {{from_name}}
+ *     Content :
+ *       Nama  : {{from_name}}
+ *       Email : {{from_email}}
+ *       Pesan : {{message}}
+ *     → Save → catat TEMPLATE_ID
+ *  4. Klik "Account" → catat PUBLIC_KEY
+ *  5. Ganti 3 nilai di bawah ini:
+ */
+const EMAILJS_SERVICE_ID  = 'GANTI_SERVICE_ID';   // contoh: 'service_abc123'
+const EMAILJS_TEMPLATE_ID = 'GANTI_TEMPLATE_ID';  // contoh: 'template_xyz789'
+const EMAILJS_PUBLIC_KEY  = 'GANTI_PUBLIC_KEY';    // contoh: 'u_AbCdEfGhIjK'
+
 const contactForm = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
@@ -598,34 +617,24 @@ if (contactForm) {
     btnText.textContent = 'Mengirim...';
     formSuccess.textContent = '';
 
-    // ── Kirim ke contact.php via AJAX ─────────────────────────
+    // ── Kirim via EmailJS ─────────────────────────────────────
     try {
-      const formData = new FormData();
-      formData.append('name',    nameVal);
-      formData.append('email',   emailVal);
-      formData.append('message', messageVal);
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        from_name:  nameVal,
+        from_email: emailVal,
+        message:    messageVal,
+      }, EMAILJS_PUBLIC_KEY);
 
-      const res  = await fetch(contactForm.action, {
-        method: 'POST',
-        body: formData
-      });
+      // ── Sukses ────────────────────────────────────────────
+      formSuccess.style.color = '#27c93f';
+      formSuccess.textContent = '✓ Pesan terkirim! Saya akan membalas dalam 24 jam.';
+      contactForm.reset();
 
-      const json = await res.json();
-
-      if (res.ok && json.success === true) {
-        // ── Sukses ────────────────────────────────────────────
-        formSuccess.style.color = '#27c93f';
-        formSuccess.textContent = '✓ Pesan terkirim! Saya akan membalas dalam 24 jam.';
-        contactForm.reset();
-      } else {
-        // ── Gagal (contact.php kembalikan error) ──────────────
-        formSuccess.style.color = '#ff5f56';
-        formSuccess.textContent = '✕ ' + (json.msg || 'Gagal mengirim pesan. Coba lagi nanti.');
-      }
     } catch (err) {
-      // ── Error jaringan ────────────────────────────────────
+      // ── Gagal ─────────────────────────────────────────────
+      console.error('EmailJS error:', err);
       formSuccess.style.color = '#ff5f56';
-      formSuccess.textContent = '✕ Koneksi gagal. Periksa internet Anda dan coba lagi.';
+      formSuccess.textContent = '✕ Gagal mengirim pesan. Coba lagi nanti.';
     }
 
     // ── Reset tombol ─────────────────────────────────────────
@@ -633,6 +642,7 @@ if (contactForm) {
     btnText.textContent = 'Kirim Pesan';
   });
 }
+
 
 /* ── 11. NAV SMOOTH ACTIVE STATE ───────── */
 const sections = document.querySelectorAll('section[id], footer[id]');
