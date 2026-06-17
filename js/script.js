@@ -592,6 +592,7 @@ const EMAILJS_SERVICE_ID = 'inineo192168';   // contoh: 'service_abc123'
 const EMAILJS_TEMPLATE_ID = 'template_1kdtkqq';  // contoh: 'template_xyz789'
 const EMAILJS_PUBLIC_KEY = '1DP0jiluZtrX896mz';    // contoh: 'u_AbCdEfGhIjK'
 
+emailjs.init(EMAILJS_PUBLIC_KEY);
 const contactForm = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
@@ -620,9 +621,10 @@ if (contactForm) {
     // ── Kirim via EmailJS ─────────────────────────────────────
     try {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name: nameVal,
-        from_email: emailVal,
+        name:    nameVal,
+        email:   emailVal,
         message: messageVal,
+        time:    new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' }),
       }, EMAILJS_PUBLIC_KEY);
 
       // ── Sukses ────────────────────────────────────────────
