@@ -588,9 +588,8 @@ function initCarousel() {
  *  4. Klik "Account" → catat PUBLIC_KEY
  *  5. Ganti 3 nilai di bawah ini:
  */
-const EMAILJS_SERVICE_ID = 'inineo192168';   // contoh: 'service_abc123'
-const EMAILJS_TEMPLATE_ID = 'template_1kdtkqq';  // contoh: 'template_xyz789'
-const EMAILJS_PUBLIC_KEY = '1DP0jiluZtrX896mz';    // contoh: 'u_AbCdEfGhIjK'
+// Kredensial EmailJS dimuat dari js/config.js (tidak ada di Git).
+// Pastikan js/config.js sudah diupload ke hosting.
 
 emailjs.init(EMAILJS_PUBLIC_KEY);
 const contactForm = document.getElementById('contactForm');
@@ -621,10 +620,10 @@ if (contactForm) {
     // ── Kirim via EmailJS ─────────────────────────────────────
     try {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        name:    nameVal,
-        email:   emailVal,
+        name: nameVal,
+        email: emailVal,
         message: messageVal,
-        time:    new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' }),
+        time: new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' }),
       }, EMAILJS_PUBLIC_KEY);
 
       // ── Sukses ────────────────────────────────────────────

@@ -1,0 +1,8 @@
+# Kredensial — jangan pernah di-commit ke Git
+js/config.js
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+*.log
