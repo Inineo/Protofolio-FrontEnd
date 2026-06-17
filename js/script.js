@@ -50,14 +50,14 @@ if (cursor && cursorTrail) {
     (function animateTrail() {
       const dx = mouseX - trailX;
       const dy = mouseY - trailY;
-      
+
       // Idle sleep: Only update if the difference is noticeable
       if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
         trailX += dx * 0.12;
         trailY += dy * 0.12;
         cursorTrail.style.transform = `translate3d(${trailX}px, ${trailY}px, 0) translate(-50%, -50%)`;
       }
-      
+
       requestAnimationFrame(animateTrail);
     })();
 
@@ -155,7 +155,7 @@ const terminalBody = document.getElementById('terminalBody');
 
 const terminalLines = [
   { type: 'prompt', text: '$ whoami' },
-  { type: 'out', text: 'Figriaone — Frontend Dev, UI/UX designer, Game Developer'},
+  { type: 'out', text: 'Figriaone — Frontend Dev, UI/UX designer, Game Developer' },
   { type: 'prompt', text: '$ ls skills/' },
   { type: 'highlight', text: 'HTML  CSS  JS  Figma Godot Unity AP AE' },
   { type: 'prompt', text: '$ cat mission.txt' },
@@ -308,9 +308,9 @@ function initCarousel() {
     const c = track.querySelector('.proj-card');
     if (c) {
       const rect = c.getBoundingClientRect();
-      cachedCardWidth = (rect.width > 0 ? rect.width : 340) + 24; 
+      cachedCardWidth = (rect.width > 0 ? rect.width : 340) + 24;
     }
-    
+
     if (shouldLoop) {
       const cards = Array.from(track.children);
       const firstOrig = cards.find(c => c.getAttribute('aria-hidden') !== 'true');
@@ -331,7 +331,7 @@ function initCarousel() {
   let dragStartX = 0;
   let dragStartScroll = 0;
   let idleTimer = null;
-  let autoRunning = shouldLoop; 
+  let autoRunning = shouldLoop;
   let rafId = null;
   let lastTime = performance.now();
 
@@ -572,7 +572,7 @@ function initCarousel() {
   }
 })();
 
-/* ── 10. CONTACT FORM (Formsubmit.co AJAX) ─────────────────── */
+/* ── 10. CONTACT FORM (via contact.php + PHPMailer) ──────────── */
 const contactForm = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
@@ -598,26 +598,29 @@ if (contactForm) {
     btnText.textContent = 'Mengirim...';
     formSuccess.textContent = '';
 
-    // ── Kirim ke Formsubmit via AJAX ─────────────────────────
+    // ── Kirim ke contact.php via AJAX ─────────────────────────
     try {
-      const formData = new FormData(contactForm);
-      const res = await fetch(contactForm.action, {
+      const formData = new FormData();
+      formData.append('name',    nameVal);
+      formData.append('email',   emailVal);
+      formData.append('message', messageVal);
+
+      const res  = await fetch(contactForm.action, {
         method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
+        body: formData
       });
 
       const json = await res.json();
 
-      if (res.ok && json.success === 'true') {
+      if (res.ok && json.success === true) {
         // ── Sukses ────────────────────────────────────────────
         formSuccess.style.color = '#27c93f';
         formSuccess.textContent = '✓ Pesan terkirim! Saya akan membalas dalam 24 jam.';
         contactForm.reset();
       } else {
-        // ── Gagal (respons tidak OK) ──────────────────────────
+        // ── Gagal (contact.php kembalikan error) ──────────────
         formSuccess.style.color = '#ff5f56';
-        formSuccess.textContent = '✕ Gagal mengirim pesan. Coba lagi atau hubungi langsung via email.';
+        formSuccess.textContent = '✕ ' + (json.msg || 'Gagal mengirim pesan. Coba lagi nanti.');
       }
     } catch (err) {
       // ── Error jaringan ────────────────────────────────────
