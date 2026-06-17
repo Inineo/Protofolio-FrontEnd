@@ -60,29 +60,41 @@ img, svg { display: block; max-width: 100%; }
 
 /* ── CURSOR ─────────────────────────────── */
 .cursor {
-  position: fixed; width: 10px; height: 10px;
+  position: fixed; top: 0; left: 0; width: 10px; height: 10px;
   background: var(--clr-yellow); border-radius: 0;
   pointer-events: none; z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: transform 0.05s, width 0.2s, height 0.2s, background 0.2s;
+  transition: width 0.2s, height 0.2s, background 0.2s;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 .cursor-trail {
-  position: fixed; width: 28px; height: 28px;
+  position: fixed; top: 0; left: 0; width: 28px; height: 28px;
   border: 2px solid var(--clr-blue); border-radius: 0;
   pointer-events: none; z-index: 9998;
   transform: translate(-50%, -50%);
-  transition: transform 0.12s var(--ease), opacity 0.3s;
+  transition: opacity 0.3s;
   opacity: 0.6;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 /* ── SCANLINES ──────────────────────────── */
 .scanlines {
-  position: fixed; inset: 0;
+  position: fixed;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh + 100px);
   background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px);
   pointer-events: none; z-index: 9990;
-  animation: scanMove 8s linear infinite;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  animation: scanMove 8s steps(480) infinite;
 }
-@keyframes scanMove { 0% { background-position: 0 0; } 100% { background-position: 0 100px; } }
+@keyframes scanMove { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(0, 100px, 0); } }
 
 /* ── LAYOUT ─────────────────────────────── */
 .container {
@@ -286,6 +298,9 @@ img, svg { display: block; max-width: 100%; }
   background: var(--clr-bg-2);
   border: 1px solid var(--clr-border);
   transition: border-color 0.3s, transform 0.35s var(--ease), box-shadow 0.35s;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 .proj-item:hover {
   border-color: var(--clr-border-b);

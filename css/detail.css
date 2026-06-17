@@ -91,18 +91,20 @@
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-lg);
   background: var(--clr-bg-3);
-  aspect-ratio: 16 / 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: auto !important;
+  min-height: 400px !important;
+  width: 100%;
+  display: block !important;
   overflow: hidden;
   position: relative;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px var(--clr-blue-glow);
+  padding: var(--space-xl) var(--space-md);
 }
 
 .preview-mockup {
-  width: 80%;
-  height: 80%;
+  width: 90% !important;
+  height: auto !important;
+  margin: 0 auto;
   position: relative;
 }
 
@@ -114,6 +116,7 @@
   background: #0a0e14;
   overflow: hidden;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  height: auto;
 }
 
 .detail-browser__bar {
@@ -143,20 +146,16 @@
 }
 
 .detail-browser__screen {
-  height: 160px;
+  height: auto;
+  width: 100%;
   background: var(--clr-bg-3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--clr-grey);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+  display: block;
 }
 
 /* Large phone mockup for detail page */
 .detail-phone {
-  width: 90px;
-  height: 160px;
+  width: 160px;
+  height: auto;
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 16px;
   background: #0a0e14;
@@ -180,8 +179,8 @@
 
 .detail-phone__screen {
   margin-top: 20px;
-  height: calc(100% - 20px);
-  background: linear-gradient(180deg, #0d1128 0%, #080c10 100%);
+  height: auto;
+  background: #080c10;
 }
 
 /* ── META BAR ─────────────────────────────── */
@@ -388,7 +387,7 @@
   overflow: hidden;
   border: 1px solid var(--clr-border);
   background: var(--clr-bg-2);
-  aspect-ratio: 16/10;
+  /* aspect-ratio dihapus agar mengikuti tinggi gambar asli */
   display: flex;
   align-items: center;
   justify-content: center;

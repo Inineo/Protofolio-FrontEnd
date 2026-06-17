@@ -32,36 +32,57 @@ const cursorTrail = document.getElementById('cursorTrail');
 
 let mouseX = 0, mouseY = 0;
 let trailX = 0, trailY = 0;
+let cursorScale = 1;
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursor.style.left = mouseX + 'px';
-  cursor.style.top = mouseY + 'px';
-});
+if (cursor && cursorTrail) {
+  if (isTouchDevice) {
+    cursor.style.display = 'none';
+    cursorTrail.style.display = 'none';
+  } else {
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(${cursorScale})`;
+    });
 
-// Smooth trail
-(function animateTrail() {
-  trailX += (mouseX - trailX) * 0.12;
-  trailY += (mouseY - trailY) * 0.12;
-  cursorTrail.style.left = trailX + 'px';
-  cursorTrail.style.top = trailY + 'px';
-  requestAnimationFrame(animateTrail);
-})();
+    // Smooth trail
+    (function animateTrail() {
+      const dx = mouseX - trailX;
+      const dy = mouseY - trailY;
+      
+      // Idle sleep: Only update if the difference is noticeable
+      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        trailX += dx * 0.12;
+        trailY += dy * 0.12;
+        cursorTrail.style.transform = `translate3d(${trailX}px, ${trailY}px, 0) translate(-50%, -50%)`;
+      }
+      
+      requestAnimationFrame(animateTrail);
+    })();
 
-// Cursor grow on interactive elements
-document.querySelectorAll('a, button, .proj-card, .service-card').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.style.transform = 'translate(-50%,-50%) scale(2)';
-    cursor.style.background = 'var(--clr-blue)';
-    cursorTrail.style.opacity = '0.2';
-  });
-  el.addEventListener('mouseleave', () => {
-    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
-    cursor.style.background = 'var(--clr-yellow)';
-    cursorTrail.style.opacity = '0.6';
-  });
-});
+    // Cursor grow on interactive elements (Event Delegation)
+    document.addEventListener('mouseover', e => {
+      const el = e.target.closest('a, button, .proj-card, .service-card');
+      if (el) {
+        cursorScale = 2;
+        cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(${cursorScale})`;
+        cursor.style.background = 'var(--clr-blue)';
+        cursorTrail.style.opacity = '0.2';
+      }
+    });
+
+    document.addEventListener('mouseout', e => {
+      const el = e.target.closest('a, button, .proj-card, .service-card');
+      if (el) {
+        cursorScale = 1;
+        cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(${cursorScale})`;
+        cursor.style.background = 'var(--clr-yellow)';
+        cursorTrail.style.opacity = '0.6';
+      }
+    });
+  }
+}
 
 /* ── 2. HEADER SCROLL STATE ─────────────── */
 const header = document.getElementById('header');
@@ -259,41 +280,81 @@ function initCarousel() {
   if (!carousel || !track || track.children.length === 0) return;
 
   const originalCards = Array.from(track.children);
-  const shouldLoop = originalCards.length > 3;
+  const shouldLoop = originalCards.length > 2;
 
   if (shouldLoop) {
-    // Clone cards for seamless infinite loop
+    // Clone cards for both sides to ensure seamless drag in both directions
     originalCards.forEach(card => {
       const clone = card.cloneNode(true);
       clone.setAttribute('aria-hidden', 'true');
       track.appendChild(clone);
     });
+    [...originalCards].reverse().forEach(card => {
+      const clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.insertBefore(clone, track.firstChild);
+    });
   } else {
-    // Center it or just leave it static if few items
     track.style.justifyContent = 'center';
   }
 
-  // Since we cloned the canvas elements, their drawing context is lost.
-  // We need to redraw all canvases in the track.
   initCanvasDecorations(track);
 
-  const cardWidth = () => {
-    const c = track.querySelector('.proj-card');
-    return c ? c.offsetWidth + 20 : 340; // card + gap
-  };
+  // ── DIMENSION CACHING ───────────────────
+  let cachedCardWidth = 340;
+  let cachedTotalWidth = 0;
 
-  const totalOriginalWidth = () => cardWidth() * originalCards.length;
+  function calculateDimensions() {
+    const c = track.querySelector('.proj-card');
+    if (c) {
+      const rect = c.getBoundingClientRect();
+      cachedCardWidth = (rect.width > 0 ? rect.width : 340) + 24; 
+    }
+    
+    if (shouldLoop) {
+      const cards = Array.from(track.children);
+      const firstOrig = cards.find(c => c.getAttribute('aria-hidden') !== 'true');
+      const firstCloneAfter = cards.find((c, i) => i > cards.indexOf(firstOrig) && c.getAttribute('aria-hidden') === 'true');
+      cachedTotalWidth = firstCloneAfter ? (firstCloneAfter.offsetLeft - firstOrig.offsetLeft) : (cachedCardWidth * originalCards.length);
+    } else {
+      cachedTotalWidth = 0;
+    }
+  }
+
+  calculateDimensions();
 
   // State
-  let currentX = 0;      // current translate X
-  let autoX = 0;      // running auto-scroll accumulator
-  let velocity = 0.6;    // px per frame (auto)
+  let currentX = shouldLoop ? -cachedTotalWidth : 0;
+  let autoX = currentX;
+  let velocity = 0.6; // px per frame at 60fps
   let isDragging = false;
   let dragStartX = 0;
   let dragStartScroll = 0;
   let idleTimer = null;
-  let autoRunning = shouldLoop; // Hanya jalan jika di-loop
+  let autoRunning = shouldLoop; 
   let rafId = null;
+  let lastTime = performance.now();
+
+  // Recalculate once window is fully loaded to handle deferred styles/images layout
+  window.addEventListener('load', () => {
+    calculateDimensions();
+    currentX = shouldLoop ? -cachedTotalWidth : 0;
+    autoX = currentX;
+    setTranslate(currentX);
+  });
+
+  // Handle Resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      calculateDimensions();
+      updateProgress();
+    }, 150);
+  });
+
+  // Set Initial Position
+  track.style.transform = `translateX(${currentX}px)`;
 
   function setTranslate(x) {
     currentX = x;
@@ -302,28 +363,30 @@ function initCarousel() {
   }
 
   function normalizeX(x) {
-    const total = totalOriginalWidth();
-    if (total === 0) return 0;
-    // Seamless wrap: when scrolled past one full set, reset
-    if (-x >= total) x += total;
-    if (-x < 0) x -= total;
+    const total = cachedTotalWidth;
+    if (total <= 0) return x;
+    while (x > -total * 0.5) x -= total;
+    while (x <= -total * 1.5) x += total;
     return x;
   }
 
-  // Auto-scroll loop
-  function autoScroll() {
+  function autoScroll(now) {
+    const delta = Math.min((now - lastTime) / 16.666, 3); // Normalize to 60fps, cap at 3 frames to prevent huge jumps
+    lastTime = now;
+
     if (!isDragging && autoRunning) {
-      autoX -= velocity;
-      let nx = normalizeX(autoX);
-      autoX = nx;
-      setTranslate(nx);
+      autoX -= velocity * delta;
+      autoX = normalizeX(autoX);
+      setTranslate(autoX);
     }
     rafId = requestAnimationFrame(autoScroll);
   }
 
-  autoScroll();
+  requestAnimationFrame((now) => {
+    lastTime = now;
+    autoScroll(now);
+  });
 
-  // Pause & resume
   function pauseAuto() {
     autoRunning = false;
     clearTimeout(idleTimer);
@@ -332,18 +395,20 @@ function initCarousel() {
   function scheduleResume() {
     clearTimeout(idleTimer);
     idleTimer = setTimeout(() => {
-      autoX = currentX; // sync accumulator
+      autoX = currentX;
+      lastTime = performance.now(); // Reset time before resuming
       autoRunning = true;
-    }, 2000); // 2 sec idle → resume
+    }, 2000);
   }
 
-  // Progress bar
   function updateProgress() {
-    const total = totalOriginalWidth();
-    if (total === 0) return;
-    const scrolled = ((-currentX) % total + total) % total;
+    const total = cachedTotalWidth;
+    if (total <= 0) return;
+    const basePos = shouldLoop ? -total : 0;
+    const relativeX = (currentX - basePos);
+    const scrolled = ((-relativeX) % total + total) % total;
     const pct = (scrolled / total) * 100;
-    progressBar.style.width = Math.min(pct, 100) + '%';
+    if (progressBar) progressBar.style.width = Math.min(pct, 100) + '%';
   }
 
   // ── DRAG (mouse) ────────────────────────
@@ -358,10 +423,22 @@ function initCarousel() {
 
   window.addEventListener('mousemove', e => {
     if (!isDragging) return;
-    const dx = e.clientX - dragStartX;
-    const nx = normalizeX(dragStartScroll + dx);
-    autoX = nx;
-    setTranslate(nx);
+    const total = cachedTotalWidth;
+    let dx = e.clientX - dragStartX;
+    let tx = dragStartScroll + dx;
+
+    if (total > 0) {
+      if (tx > -total * 0.5) {
+        tx -= total;
+        dragStartScroll -= total;
+      } else if (tx < -total * 1.5) {
+        tx += total;
+        dragStartScroll += total;
+      }
+    }
+
+    autoX = tx;
+    setTranslate(tx);
   });
 
   window.addEventListener('mouseup', () => {
@@ -381,10 +458,22 @@ function initCarousel() {
 
   carousel.addEventListener('touchmove', e => {
     if (!isDragging) return;
-    const dx = e.touches[0].clientX - dragStartX;
-    const nx = normalizeX(dragStartScroll + dx);
-    autoX = nx;
-    setTranslate(nx);
+    const total = cachedTotalWidth;
+    let dx = e.touches[0].clientX - dragStartX;
+    let tx = dragStartScroll + dx;
+
+    if (total > 0) {
+      if (tx > -total * 0.5) {
+        tx -= total;
+        dragStartScroll -= total;
+      } else if (tx < -total * 1.5) {
+        tx += total;
+        dragStartScroll += total;
+      }
+    }
+
+    autoX = tx;
+    setTranslate(tx);
   }, { passive: true });
 
   carousel.addEventListener('touchend', () => {
@@ -397,22 +486,21 @@ function initCarousel() {
     pauseAuto();
     const nx = normalizeX(currentX + amount);
     autoX = nx;
-    // Smooth jump
     track.style.transition = 'transform 0.45s cubic-bezier(0.4,0,0.2,1)';
     setTranslate(nx);
     setTimeout(() => { track.style.transition = 'none'; }, 460);
     scheduleResume();
   }
 
-  prevBtn.addEventListener('click', () => scrollBy(cardWidth()));
-  nextBtn.addEventListener('click', () => scrollBy(-cardWidth()));
+  if (prevBtn) prevBtn.addEventListener('click', () => scrollBy(cachedCardWidth));
+  if (nextBtn) nextBtn.addEventListener('click', () => scrollBy(-cachedCardWidth));
 
-  // Stop RAF on visibility change (performance)
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       cancelAnimationFrame(rafId);
     } else {
-      autoScroll();
+      lastTime = performance.now();
+      rafId = requestAnimationFrame(autoScroll);
     }
   });
 }
@@ -448,7 +536,7 @@ function initCarousel() {
 
       let coverImgHtml = '';
       if (p.coverImage) {
-        coverImgHtml = `<img src="../neonly/uploads/${p.coverImage}" alt="${p.title}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 1;" />`;
+        coverImgHtml = `<img src="../neonly/uploads/${p.coverImage}" alt="${p.title}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 1;" />`;
       }
 
       const article = document.createElement('article');
@@ -484,34 +572,62 @@ function initCarousel() {
   }
 })();
 
-/* ── 10. CONTACT FORM ───────────────────── */
+/* ── 10. CONTACT FORM (Formsubmit.co AJAX) ─────────────────── */
 const contactForm = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
 if (contactForm) {
   contactForm.addEventListener('submit', async e => {
     e.preventDefault();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
-    const btn = contactForm.querySelector('button[type="submit"]');
 
-    if (!email || !message) {
+    const nameVal    = (document.getElementById('contactName')?.value || '').trim();
+    const emailVal   = document.getElementById('email').value.trim();
+    const messageVal = document.getElementById('message').value.trim();
+    const btn        = document.getElementById('submitBtn');
+    const btnText    = btn.querySelector('.btn__text');
+
+    // ── Validasi client-side ──────────────────────────────────
+    if (!nameVal || !emailVal || !messageVal) {
       formSuccess.style.color = '#ff5f56';
       formSuccess.textContent = '⚠ Mohon isi semua field yang diperlukan.';
       return;
     }
 
-    // Simulate sending
+    // ── State: loading ────────────────────────────────────────
     btn.disabled = true;
-    btn.querySelector('.btn__text').textContent = 'Mengirim...';
+    btnText.textContent = 'Mengirim...';
+    formSuccess.textContent = '';
 
-    await sleep(1200);
+    // ── Kirim ke Formsubmit via AJAX ─────────────────────────
+    try {
+      const formData = new FormData(contactForm);
+      const res = await fetch(contactForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
 
-    formSuccess.style.color = '#27c93f';
-    formSuccess.textContent = '✓ Pesan terkirim! Saya akan membalas dalam 24 jam.';
-    contactForm.reset();
+      const json = await res.json();
+
+      if (res.ok && json.success === 'true') {
+        // ── Sukses ────────────────────────────────────────────
+        formSuccess.style.color = '#27c93f';
+        formSuccess.textContent = '✓ Pesan terkirim! Saya akan membalas dalam 24 jam.';
+        contactForm.reset();
+      } else {
+        // ── Gagal (respons tidak OK) ──────────────────────────
+        formSuccess.style.color = '#ff5f56';
+        formSuccess.textContent = '✕ Gagal mengirim pesan. Coba lagi atau hubungi langsung via email.';
+      }
+    } catch (err) {
+      // ── Error jaringan ────────────────────────────────────
+      formSuccess.style.color = '#ff5f56';
+      formSuccess.textContent = '✕ Koneksi gagal. Periksa internet Anda dan coba lagi.';
+    }
+
+    // ── Reset tombol ─────────────────────────────────────────
     btn.disabled = false;
-    btn.querySelector('.btn__text').textContent = 'Kirim Pesan';
+    btnText.textContent = 'Kirim Pesan';
   });
 }
 

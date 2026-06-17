@@ -7,10 +7,18 @@
   <title>Figriaone — Digital Craftsman</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Share+Tech+Mono&display=swap" />
+  <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Share+Tech+Mono&display=swap"
-    rel="stylesheet" />
+    media="print" onload="this.media='all'" />
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Share+Tech+Mono&display=swap" />
+  </noscript>
+  <link rel="preload" href="css/style.css" as="style" />
   <link rel="stylesheet" href="css/style.css" />
+  <script src="js/script.js" defer></script>
 </head>
 
 <body>
@@ -63,7 +71,8 @@
       <!-- Foto pribadi (ganti path dengan foto PNG transparan Anda) -->
       <div class="splash__photo-wrap">
         <div class="splash__photo-glow" aria-hidden="true"></div>
-        <img class="splash__photo" src="images/avatar 1.png" alt="Figriaone — Developer & Designer" />
+        <img class="splash__photo" src="images/avatar1.webp" alt="Figriaone — Developer & Designer" width="783"
+          height="800" />
       </div>
 
       <!-- Role tags tersebar di sekitar foto -->
@@ -211,7 +220,7 @@
             <div class="about__card-wrap">
               <div class="about__card">
                 <div class="about__avatar">
-                  <img src="images/avatar2.jpeg" alt="Profile Photo" class="pas-foto" />
+                  <img src="images/avatar2.webp" alt="Profile Photo" class="pas-foto" />
                 </div>
                 <div class="about__card-info">
                   <p class="about__name">Figriaone</p>
@@ -395,30 +404,46 @@
             <div class="footer__socials">
               <a href="https://github.com/Inineo" class="social-link">GitHub</a>
               <a href="https://www.linkedin.com/in/figriaone-hinoor-b9b0aa304/" class="social-link">LinkedIn</a>
-              <a href="#" class="social-link">Dribbble</a>
-              <a href="#" class="social-link">Twitter/X</a>
             </div>
           </div>
 
           <div class="footer__right fade-in">
-            <form class="contact-form" id="contactForm" novalidate>
+            <form class="contact-form" id="contactForm" action="https://formsubmit.co/ajax/inineo192@gmail.com"
+              method="POST">
+
+              <!-- ── Formsubmit hidden fields ── -->
+              <!-- Ganti YOUR_EMAIL@gmail.com di atas dengan email asli Anda -->
+              <input type="hidden" name="_subject" value="🗨️ Pesan baru dari Kicaumania Portfolio">
+              <input type="hidden" name="_captcha" value="false">
+              <!-- Honeypot anti-spam -->
+              <input type="text" name="_honey" style="display:none">
+
+              <div class="form-field">
+                <label for="contactName">Nama</label>
+                <div class="input-wrap">
+                  <input type="text" id="contactName" name="name" placeholder="Nama lengkap Anda" autocomplete="off"
+                    required />
+                  <span class="input-icon">✦</span>
+                </div>
+              </div>
               <div class="form-field">
                 <label for="email">Email address</label>
                 <div class="input-wrap">
-                  <input type="email" id="email" name="email" placeholder="kamu@domain.com" autocomplete="off" />
+                  <input type="email" id="email" name="email" placeholder="kamu@domain.com" autocomplete="off"
+                    required />
                   <span class="input-icon">@</span>
                 </div>
               </div>
               <div class="form-field">
                 <label for="message">Pesan singkat</label>
-                <textarea id="message" name="message" rows="4"
-                  placeholder="Hei Neo, saya mau diskusi tentang..."></textarea>
+                <textarea id="message" name="message" rows="4" placeholder="Hei Neo, saya mau diskusi tentang..."
+                  required></textarea>
               </div>
               <div class="form-field form-field--checkbox">
                 <input type="checkbox" id="subscribe" name="subscribe" />
                 <label for="subscribe">Daftarkan email saya untuk update proyek &amp; artikel</label>
               </div>
-              <button type="submit" class="btn btn--primary btn--full">
+              <button type="submit" class="btn btn--primary btn--full" id="submitBtn">
                 <span class="btn__text">Kirim Pesan</span>
                 <span class="btn__icon">⌑</span>
               </button>
@@ -436,7 +461,6 @@
 
   </main>
 
-  <script src="js/script.js"></script>
 </body>
 
 </html>

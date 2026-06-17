@@ -4,6 +4,7 @@
    ══════════════════════════════════════════ */
 
 'use strict';
+console.log("CAROUSEL & DETAIL FIXED - VERSI FINAL");
 
 // Data will be fetched from API
 let CURRENT_PROJECT = null;
@@ -16,38 +17,31 @@ function setText(id, txt) { const e = el(id); if (e) e.textContent = txt || '—
 function setHTML(id, html) { const e = el(id); if (e) e.innerHTML = html || ''; }
 
 function renderMockup(type, accent, coverImage) {
+  console.log("Rendering Mockup with image:", coverImage);
   const wrap = document.getElementById('previewMockup');
   if (!wrap) return;
 
+  const imgPath = `../neonly/uploads/${coverImage}`;
+  const imgHtml = coverImage
+    ? `<img src="${imgPath}" alt="Cover" style="width:100%; height:auto; display:block; border-radius:inherit; min-height:100px;">`
+    : '<p style="color:white; padding:20px; font-family:var(--font-mono); font-size:0.7rem;">[ No Preview Image ]</p>';
+
   if (type === 'phone') {
     wrap.innerHTML = `
-      <div class="detail-phone" style="box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 40px ${accent}33">
-        <div class="detail-phone__screen" style="background: linear-gradient(180deg, ${accent}22 0%, #080c10 100%)"></div>
+      <div class="detail-phone" style="width:180px; height:auto; min-height:320px; box-shadow: 0 12px 40px rgba(0,0,0,0.6);">
+        <div class="detail-phone__screen" style="background: #080c10; height:auto; display:block;">${imgHtml}</div>
       </div>`;
   } else {
     wrap.innerHTML = `
-      <div class="detail-browser">
+      <div class="detail-browser" style="width:100%; height:auto; display:block;">
         <div class="detail-browser__bar">
           <span class="mb-dot" style="background:#ff5f56"></span>
           <span class="mb-dot" style="background:#ffbd2e"></span>
           <span class="mb-dot" style="background:#27c93f"></span>
           <div class="mb-url">inineo.dev / preview</div>
         </div>
-        <div class="detail-browser__screen" style="background: linear-gradient(135deg, ${accent}15 0%, #080c10 100%)">
-          <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--clr-grey);opacity:0.5">[ design preview ]</span>
-        </div>
+        <div class="detail-browser__screen" style="background: #080c10; height:auto; display:block;">${imgHtml}</div>
       </div>`;
-  }
-
-  // Insert cover image into mockup if available
-  if (coverImage) {
-    const mockupScreen = document.querySelector('.detail-phone__screen, .detail-browser__screen');
-    if (mockupScreen) {
-      mockupScreen.style.backgroundImage = `url('../neonly/uploads/${coverImage}')`;
-      mockupScreen.style.backgroundSize = 'cover';
-      mockupScreen.style.backgroundPosition = 'top center';
-      mockupScreen.innerHTML = '';
-    }
   }
 }
 
@@ -76,11 +70,12 @@ function renderShowcase(showcaseImages) {
   showcaseImages.forEach((imgFile) => {
     const item = document.createElement('div');
     item.className = 'showcase-item';
-    item.style.cssText = 'width:100%; border-radius:var(--radius-md,12px); overflow:hidden; aspect-ratio:16/9; border:1px solid var(--clr-border);';
+    // Gunakan display: block agar kontainer mengikuti ukuran gambar di dalamnya
+    item.style.cssText = 'width:100%; height:auto; border-radius:var(--radius-md,12px); overflow:hidden; border:1px solid var(--clr-border); display:block;';
     item.innerHTML = `
       <img src="../neonly/uploads/${imgFile}" 
            alt="Showcase" 
-           style="width:100%; height:100%; object-fit:cover; display:block;" 
+           style="width:100%; height:auto; display:block;" 
            loading="lazy" />
     `;
     grid.appendChild(item);
@@ -92,6 +87,39 @@ function renderShowcase(showcaseImages) {
    ══════════════════════════════════════════ */
 function renderProject(project) {
   const p = project;
+
+  // --- ACTIONS BUTTONS LOGIC ---
+  const githubBtn = el('detail-github-btn');
+  if (githubBtn) {
+    if (p.githubLink && p.githubLink !== '' && p.githubLink !== '#') {
+      githubBtn.href = p.githubLink;
+      githubBtn.style.display = 'inline-flex';
+    } else {
+      githubBtn.style.display = 'none';
+    }
+  }
+
+  const liveBtn = el('detail-live-btn');
+  if (liveBtn) {
+    if (p.projectLink && p.projectLink !== '' && p.projectLink !== '#') {
+      liveBtn.href = p.projectLink;
+      liveBtn.style.display = 'inline-flex';
+    } else {
+      liveBtn.style.display = 'none';
+    }
+  }
+
+  const caseBtn = el('detail-case-btn');
+  if (caseBtn) {
+    if (p.caseStudyLink && p.caseStudyLink !== '' && p.caseStudyLink !== '#') {
+      caseBtn.href = p.caseStudyLink;
+      caseBtn.style.display = 'inline-flex';
+    } else {
+      caseBtn.style.display = 'none';
+    }
+  }
+  // -----------------------------
+
   document.title = `${p.title} — inineo`;
 
   // Breadcrumb
@@ -131,27 +159,6 @@ function renderProject(project) {
       linear-gradient(var(--clr-border) 1px, transparent 1px),
       linear-gradient(90deg, var(--clr-border) 1px, transparent 1px)`;
     heroBg.style.backgroundSize = '100% 100%, 48px 48px, 48px 48px';
-  }
-
-  // Actions
-  const liveBtn = el('detail-live-btn');
-  if (liveBtn) {
-    if (p.projectLink) {
-      liveBtn.href = p.projectLink;
-      liveBtn.style.display = 'inline-flex';
-    } else {
-      liveBtn.style.display = 'none';
-    }
-  }
-
-  const caseBtn = el('detail-case-btn');
-  if (caseBtn) {
-    if (p.caseStudyLink) {
-      caseBtn.href = p.caseStudyLink;
-      caseBtn.style.display = 'inline-flex';
-    } else {
-      caseBtn.style.display = 'none';
-    }
   }
 
   // Content sections
@@ -214,10 +221,10 @@ function renderProject(project) {
     const rows = [];
 
     // Add standard fields (only if they have values)
-    if (p.client)   rows.push({ key: 'Client',   val: p.client });
+    if (p.client) rows.push({ key: 'Client', val: p.client });
     if (p.timeline) rows.push({ key: 'Timeline', val: p.timeline });
-    if (p.role)     rows.push({ key: 'Role',     val: p.role });
-    if (p.year)     rows.push({ key: 'Year',     val: p.year });
+    if (p.role) rows.push({ key: 'Role', val: p.role });
+    if (p.year) rows.push({ key: 'Year', val: p.year });
 
     // Append custom sidebar info from admin (Industry, Platform, Team Size, Status, etc.)
     if (p.sidebarInfo && Array.isArray(p.sidebarInfo)) {
@@ -255,7 +262,7 @@ function renderProject(project) {
 
   const prevBtn = el('prevProject');
   const nextBtn = el('nextProject');
-  
+
   if (prevBtn) {
     if (prevId) {
       prevBtn.href = `project-detail.html?id=${prevId}`;

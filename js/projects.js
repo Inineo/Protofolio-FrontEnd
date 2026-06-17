@@ -11,34 +11,53 @@ const cursorTrail = document.getElementById('cursorTrail');
 
 if (cursor && cursorTrail) {
   let mouseX = 0, mouseY = 0, trailX = 0, trailY = 0;
+  let cursorScale = 1;
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-  document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top  = mouseY + 'px';
-  });
-
-  (function animateTrail() {
-    trailX += (mouseX - trailX) * 0.12;
-    trailY += (mouseY - trailY) * 0.12;
-    cursorTrail.style.left = trailX + 'px';
-    cursorTrail.style.top  = trailY + 'px';
-    requestAnimationFrame(animateTrail);
-  })();
-
-  document.querySelectorAll('a, button, .proj-item, .filter-chip, .process-step').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.transform    = 'translate(-50%,-50%) scale(2.2)';
-      cursor.style.background   = 'var(--clr-blue)';
-      cursorTrail.style.opacity = '0.2';
+  if (isTouchDevice) {
+    cursor.style.display = 'none';
+    cursorTrail.style.display = 'none';
+  } else {
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(${cursorScale})`;
     });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.transform    = 'translate(-50%,-50%) scale(1)';
-      cursor.style.background   = 'var(--clr-yellow)';
-      cursorTrail.style.opacity = '0.6';
+
+    (function animateTrail() {
+      const dx = mouseX - trailX;
+      const dy = mouseY - trailY;
+      
+      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        trailX += dx * 0.12;
+        trailY += dy * 0.12;
+        cursorTrail.style.transform = `translate3d(${trailX}px, ${trailY}px, 0) translate(-50%, -50%)`;
+      }
+      
+      requestAnimationFrame(animateTrail);
+    })();
+
+    // Cursor grow on interactive elements (Event Delegation)
+    document.addEventListener('mouseover', e => {
+      const el = e.target.closest('a, button, .proj-item, .filter-chip, .process-step');
+      if (el) {
+        cursorScale = 2.2;
+        cursor.style.transform    = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(${cursorScale})`;
+        cursor.style.background   = 'var(--clr-blue)';
+        cursorTrail.style.opacity = '0.2';
+      }
     });
-  });
+
+    document.addEventListener('mouseout', e => {
+      const el = e.target.closest('a, button, .proj-item, .filter-chip, .process-step');
+      if (el) {
+        cursorScale = 1;
+        cursor.style.transform    = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(${cursorScale})`;
+        cursor.style.background   = 'var(--clr-yellow)';
+        cursorTrail.style.opacity = '0.6';
+      }
+    });
+  }
 }
 
 /* ── HEADER SCROLL ──────────────────────── */
@@ -116,7 +135,7 @@ if (filterChips && projectsGrid) {
 
   function renderMockup(proj) {
     if (proj.coverImage) {
-      return `<img src="../neonly/uploads/${proj.coverImage}" alt="${proj.title}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;" />`;
+      return `<img src="../neonly/uploads/${proj.coverImage}" alt="${proj.title}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;" />`;
     }
 
     const type = proj.mockupType;
