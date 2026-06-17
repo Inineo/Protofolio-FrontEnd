@@ -588,9 +588,9 @@ function initCarousel() {
  *  4. Klik "Account" → catat PUBLIC_KEY
  *  5. Ganti 3 nilai di bawah ini:
  */
-const EMAILJS_SERVICE_ID  = 'GANTI_SERVICE_ID';   // contoh: 'service_abc123'
-const EMAILJS_TEMPLATE_ID = 'GANTI_TEMPLATE_ID';  // contoh: 'template_xyz789'
-const EMAILJS_PUBLIC_KEY  = 'GANTI_PUBLIC_KEY';    // contoh: 'u_AbCdEfGhIjK'
+const EMAILJS_SERVICE_ID = 'inineo192168';   // contoh: 'service_abc123'
+const EMAILJS_TEMPLATE_ID = 'template_1kdtkqq';  // contoh: 'template_xyz789'
+const EMAILJS_PUBLIC_KEY = '1DP0jiluZtrX896mz';    // contoh: 'u_AbCdEfGhIjK'
 
 const contactForm = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
@@ -599,11 +599,11 @@ if (contactForm) {
   contactForm.addEventListener('submit', async e => {
     e.preventDefault();
 
-    const nameVal    = (document.getElementById('contactName')?.value || '').trim();
-    const emailVal   = document.getElementById('email').value.trim();
+    const nameVal = (document.getElementById('contactName')?.value || '').trim();
+    const emailVal = document.getElementById('email').value.trim();
     const messageVal = document.getElementById('message').value.trim();
-    const btn        = document.getElementById('submitBtn');
-    const btnText    = btn.querySelector('.btn__text');
+    const btn = document.getElementById('submitBtn');
+    const btnText = btn.querySelector('.btn__text');
 
     // ── Validasi client-side ──────────────────────────────────
     if (!nameVal || !emailVal || !messageVal) {
@@ -620,9 +620,9 @@ if (contactForm) {
     // ── Kirim via EmailJS ─────────────────────────────────────
     try {
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name:  nameVal,
+        from_name: nameVal,
         from_email: emailVal,
-        message:    messageVal,
+        message: messageVal,
       }, EMAILJS_PUBLIC_KEY);
 
       // ── Sukses ────────────────────────────────────────────
