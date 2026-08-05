@@ -516,7 +516,7 @@ function initCarousel() {
     const data = await res.json();
 
     // ID Project yang ingin ditampilkan (Manual)
-    const manualIds = [1, 2, 3]; // Ganti atau tambah angka di dalam kurung siku ini dengan ID project Anda
+    const manualIds = [1, 2, 3, 4, 5, 6, 7,]; // Ganti atau tambah angka di dalam kurung siku ini dengan ID project Anda
 
     // Filter berdasarkan manualIds dan batasi maksimal 9
     const projects = data.projects
