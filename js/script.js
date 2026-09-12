@@ -661,22 +661,3 @@ if (contactForm) {
     btnText.textContent = 'Kirim Pesan';
   });
 }
-
-
-/* ── 11. NAV SMOOTH ACTIVE STATE ───────── */
-const sections = document.querySelectorAll('section[id], footer[id]');
-const navLinks = document.querySelectorAll('.nav__link');
-
-const activeObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      navLinks.forEach(link => {
-        link.style.color = link.getAttribute('href') === '#' + entry.target.id
-          ? 'var(--clr-white)'
-          : '';
-      });
-    }
-  });
-}, { threshold: 0.4 });
-
-sections.forEach(s => activeObserver.observe(s));
