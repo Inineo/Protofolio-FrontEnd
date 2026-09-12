@@ -760,16 +760,20 @@ body:hover .cursor {
    HERO
    ════════════════════════════════════════ */
 .hero {
+  width: 100%;
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  padding-top: calc(var(--header-h) + 2rem);
-  padding-inline: var(--space-md);
-  max-width: var(--container);
-  margin-inline: auto;
-  gap: var(--space-xl);
+  /* Precisely offset fixed header, keep content vertically centred */
+  padding-top: calc(var(--header-h) + clamp(1.5rem, 3vh, 3rem));
+  padding-bottom: clamp(2rem, 4vh, 4rem);
+  padding-inline: clamp(var(--space-md), 4vw, var(--space-xl));
+  gap: clamp(var(--space-md), 4vw, var(--space-xl));
   position: relative;
+  margin-inline: auto;
+  max-width: var(--container);
+  box-sizing: border-box;
 }
 
 .hero__bg-grid {
@@ -1102,19 +1106,28 @@ body:hover .cursor {
    ════════════════════════════════════════ */
 .about {
   background: var(--clr-bg-2);
+  /* Full viewport height — content centred vertically */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Override generic .section padding-block */
+  padding-block: clamp(var(--space-lg), 6vh, var(--space-2xl)) !important;
 }
 
 .about__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-xl);
+  gap: clamp(var(--space-lg), 5vw, var(--space-xl));
   align-items: center;
+  width: 100%;
 }
 
 .about__body {
   color: var(--clr-grey-light);
   margin-bottom: var(--space-sm);
-  font-size: 0.95rem;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  line-height: 1.75;
 }
 
 .about__skills {
@@ -1125,11 +1138,11 @@ body:hover .cursor {
 }
 
 .skill-chip {
-  padding: 4px 14px;
+  padding: 5px 16px;
   border: 1px solid var(--clr-border-b);
   border-radius: 2px;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: clamp(0.75rem, 1vw, 0.85rem);
   letter-spacing: 0.06em;
   color: var(--clr-blue);
   transition: all 0.2s;
@@ -1193,7 +1206,7 @@ body:hover .cursor {
 
 /* Pas Foto Avatar */
 .pas-foto {
-  width: 200px;
+  width: clamp(180px, 20vw, 280px);
   aspect-ratio: 3 / 4;
   object-fit: cover;
   border: 2px solid var(--clr-border-b);
@@ -1263,6 +1276,16 @@ body:hover .cursor {
    ════════════════════════════════════════ */
 .services {
   background: var(--clr-bg);
+  /* Full viewport — let grid cards grow naturally, no hard clip */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Extra top breathing room so section-label is never clipped */
+  padding-block-start: clamp(var(--space-xl), 8vh, var(--space-2xl)) !important;
+  padding-block-end: clamp(var(--space-lg), 5vh, var(--space-xl)) !important;
+  box-sizing: border-box;
+  overflow: visible;
 }
 
 .services__grid {
@@ -1275,7 +1298,7 @@ body:hover .cursor {
   background: var(--clr-bg-2);
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-md);
-  padding: var(--space-lg);
+  padding: clamp(var(--space-md), 2.5vh, var(--space-lg));
   position: relative;
   overflow: hidden;
   transition: border-color 0.3s, transform 0.3s var(--ease), box-shadow 0.3s;
