@@ -338,13 +338,16 @@ body:hover .cursor {
   right: 0;
   height: var(--header-h);
   z-index: 1000;
+  /* Always visible — subtle dark bg so nav links are readable over any section */
+  background: rgba(8, 12, 16, 0.6);
+  backdrop-filter: blur(8px) saturate(1.2);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
   transition: background 0.4s var(--ease), border-color 0.4s, backdrop-filter 0.4s;
-  border-bottom: 1px solid transparent;
 }
 
 .header.scrolled {
-  background: rgba(8, 12, 16, 0.85);
-  backdrop-filter: blur(16px) saturate(1.4);
+  background: rgba(8, 12, 16, 0.92);
+  backdrop-filter: blur(20px) saturate(1.6);
   border-bottom-color: var(--clr-border);
 }
 
@@ -420,11 +423,13 @@ body:hover .cursor {
   transition: width 0.3s var(--ease);
 }
 
-.nav__link:hover {
+.nav__link:hover,
+.nav__link.active {
   color: var(--clr-white);
 }
 
-.nav__link:hover::after {
+.nav__link:hover::after,
+.nav__link.active::after {
   width: 100%;
 }
 

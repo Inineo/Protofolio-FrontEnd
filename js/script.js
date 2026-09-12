@@ -90,6 +90,24 @@ window.addEventListener('scroll', () => {
   header.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
 
+/* ── 2b. ACTIVE NAV LINK (section tracking) ─ */
+const navLinks = document.querySelectorAll('.nav__link');
+const sections = document.querySelectorAll('section[id]');
+
+const navObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        link.classList.toggle('active', href === `#${id}`);
+      });
+    }
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(sec => navObserver.observe(sec));
+
 /* ── 3. HAMBURGER MENU ──────────────────── */
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
