@@ -157,7 +157,7 @@ const terminalLines = [
   { type: 'prompt', text: '$ whoami' },
   { type: 'out', text: 'Figriaone — Frontend Dev, UI/UX designer, Game Developer' },
   { type: 'prompt', text: '$ ls skills/' },
-  { type: 'highlight', text: 'HTML  CSS  JS  Figma Godot Unity AP AE' },
+  { type: 'highlight', text: 'React  Next.js  Supabase  JavaScript  Figma  Git' },
   { type: 'prompt', text: '$ cat mission.txt' },
   { type: 'out', text: 'Building creative product with functional, vibrant & aesthetic.' },
   { type: 'out', text: 'Clean code. Sharp design. No compromise.' },
