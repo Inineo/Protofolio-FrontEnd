@@ -524,6 +524,12 @@ function initCarousel() {
 }
 
 /* ── 9.5. FETCH AND RENDER PORTFOLIO ────── */
+// Helper function to convert newlines to <br> tags
+function nl2br(str) {
+  if (!str) return '';
+  return str.replace(/\n/g, '<br>');
+}
+
 (async function loadPortfolioCarousel() {
   const track = document.getElementById('carouselTrack');
   if (!track) return;
@@ -570,7 +576,7 @@ function initCarousel() {
         <div class="proj-card__body">
           <span class="proj-card__tag">${p.category || 'Project'}</span>
           <h3 class="proj-card__title">${p.title}</h3>
-          <p class="proj-card__desc">${p.tagline || ''}</p>
+          <p class="proj-card__desc">${nl2br(p.tagline || '')}</p>
           <a href="project-detail.html?id=${p.id}" class="proj-card__link">View Project →</a>
         </div>
       `;

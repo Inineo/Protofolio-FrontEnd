@@ -16,6 +16,12 @@ function el(sel) { return document.getElementById(sel); }
 function setText(id, txt) { const e = el(id); if (e) e.textContent = txt || '—'; }
 function setHTML(id, html) { const e = el(id); if (e) e.innerHTML = html || ''; }
 
+// Helper function to convert newlines to <br> tags
+function nl2br(str) {
+  if (!str) return '';
+  return str.replace(/\n/g, '<br>');
+}
+
 function renderMockup(type, accent, coverImage) {
   console.log("Rendering Mockup with image:", coverImage);
   const wrap = document.getElementById('previewMockup');
@@ -163,10 +169,10 @@ function renderProject(project) {
 
   // Content sections
   setText('content-overview-heading', `${p.title} — Project Overview`);
-  setHTML('content-overview', p.overview || p.description || '');
-  setHTML('content-problem', p.problem);
-  setHTML('content-results', p.resultsBody);
-  setHTML('content-learnings', p.learnings);
+  setHTML('content-overview', nl2br(p.overview || p.description || ''));
+  setHTML('content-problem', nl2br(p.problem));
+  setHTML('content-results', nl2br(p.resultsBody));
+  setHTML('content-learnings', nl2br(p.learnings));
 
   // Hide empty content sections
   document.querySelectorAll('.content-block').forEach(block => {
@@ -186,7 +192,7 @@ function renderProject(project) {
           <div class="process-step__num">${String(i + 1).padStart(2, '0')}</div>
           <div>
             <div class="process-step__title">${s.title || ''}</div>
-            <div class="process-step__desc">${s.desc || ''}</div>
+            <div class="process-step__desc">${nl2br(s.desc || '')}</div>
           </div>
         </div>
       `).join('');
