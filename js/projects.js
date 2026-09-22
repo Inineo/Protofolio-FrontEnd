@@ -248,7 +248,7 @@ if (filterChips && projectsGrid) {
             
             html += `
             <article class="proj-item fade-in" data-category="${catClass}" data-delay="${delay}">
-              <a href="project-detail.html?id=${proj.id}" class="proj-item__link" aria-label="${proj.title}">
+              <a href="/project/${proj.id}" class="proj-item__link" aria-label="${proj.title}">
                 <div class="proj-item__img">
                   ${renderMockup(proj)}
                   <div class="proj-item__overlay">

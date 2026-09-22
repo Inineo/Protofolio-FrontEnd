@@ -271,7 +271,7 @@ function renderProject(project) {
 
   if (prevBtn) {
     if (prevId) {
-      prevBtn.href = `project-detail.html?id=${prevId}`;
+      prevBtn.href = `/project/${prevId}`;
       prevBtn.style.opacity = '1';
       prevBtn.style.pointerEvents = 'auto';
       el('prevName').textContent = 'Previous Project';
@@ -282,7 +282,7 @@ function renderProject(project) {
   }
 
   if (nextBtn) {
-    nextBtn.href = `project-detail.html?id=${nextId}`;
+    nextBtn.href = `/project/${nextId}`;
     el('nextName').textContent = 'Next Project';
   }
 

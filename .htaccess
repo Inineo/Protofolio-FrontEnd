@@ -1,19 +1,22 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /Public/
 
-# 1. Hilangkan ekstensi .html jika diakses langsung (Redirect 301 ke Clean URL)
-# /all-projects.html -> /projects
+# 1. Hilangkan ekstensi .html jika sengaja diketik (Redirect 301)
+# /all-projects atau /all-projects.html -> /projects
 RewriteCond %{THE_REQUEST} \s/+(?:Public/)?all-projects(?:\.html)?[\s?] [NC]
-RewriteRule ^all-projects(?:\.html)?$ projects [R=301,L]
+RewriteRule ^all-projects(?:\.html)?$ /projects [R=301,L]
 
 # /project-detail.html?id=123 -> /project/123
 RewriteCond %{THE_REQUEST} \s/+(?:Public/)?project-detail(?:\.html)?\?id=([0-9]+)[\s] [NC]
-RewriteRule ^project-detail(?:\.html)?$ project/%1? [R=301,L]
+RewriteRule ^project-detail(?:\.html)?$ /project/%1? [R=301,L]
 
-# Hilangkan file .html umum lainnya jika ada
+# /index.html -> /
+RewriteCond %{THE_REQUEST} \s/+(?:Public/)?index(?:\.html)?[\s?] [NC]
+RewriteRule ^index(?:\.html)?$ / [R=301,L]
+
+# Hilangkan file .html umum lainnya
 RewriteCond %{THE_REQUEST} \s/+(?:Public/)?([^.]+)\.html[\s?] [NC]
-RewriteRule ^([^.]+)\.html$ $1 [R=301,L]
+RewriteRule ^([^.]+)\.html$ /$1 [R=301,L]
 
 
 # 2. Internal Rewrite: Petakan Clean URL kembali ke file fisik asli
@@ -23,7 +26,7 @@ RewriteRule ^projects/?$ all-projects.html [L,QSA]
 # /project/123 -> project-detail.html?id=123
 RewriteRule ^project/([0-9]+)/?$ project-detail.html?id=$1 [L,QSA]
 
-# General fallback: nama file tanpa .html
+# Fallback: file HTML tanpa ekstensi
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME}.html -f

@@ -577,7 +577,7 @@ function nl2br(str) {
           <span class="proj-card__tag">${p.category || 'Project'}</span>
           <h3 class="proj-card__title">${p.title}</h3>
           <p class="proj-card__desc">${nl2br(p.tagline || '')}</p>
-          <a href="project-detail.html?id=${p.id}" class="proj-card__link">View Project →</a>
+          <a href="/project/${p.id}" class="proj-card__link">View Project →</a>
         </div>
       `;
       track.appendChild(article);
