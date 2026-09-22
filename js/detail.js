@@ -295,10 +295,22 @@ function renderProject(project) {
    ══════════════════════════════════════════ */
 async function boot() {
   const params = new URLSearchParams(window.location.search);
-  const id = parseInt(params.get('id'), 10) || 1;
+  let id = parseInt(params.get('id'), 10);
+
+  if (!id) {
+    const pathMatch = window.location.pathname.match(/\/project\/(\d+)/i);
+    if (pathMatch) {
+      id = parseInt(pathMatch[1], 10);
+    }
+  }
+
+  id = id || 1;
 
   try {
-    const response = await fetch(`../neonly/api/project-detail.php?id=${id}`);
+    const apiUrl = window.location.pathname.includes('/project/')
+      ? '../../neonly/api/project-detail.php?id=' + id
+      : '../neonly/api/project-detail.php?id=' + id;
+    const response = await fetch(apiUrl);
     const data = await response.json();
 
     if (data.error) {
